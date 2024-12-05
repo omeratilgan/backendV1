@@ -1,5 +1,5 @@
 const express = require('express');
-const jwtAuth = require('../../../middleware/jwtAuth'); // JWT doğrulama middleware'i
+const jwtAuth = require('../../api/middleware/jwtAuth'); // JWT doğrulama middleware'i
 const userController = require('../controllers/userController'); // Controller'ı dahil et
 
 const router = express.Router();
