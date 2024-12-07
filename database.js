@@ -5,10 +5,7 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
     try {
-        await mongoose.connect('mongodb://localhost:27017/mydatabase', {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
+        await mongoose.connect('mongodb://localhost:27017/mydb');
         console.log('MongoDB bağlantısı başarılı!');
     } catch (err) {
         console.error('MongoDB bağlantı hatası:', err.message);

@@ -1,4 +1,7 @@
 const User = require('../../../models/User');  // User modelini dahil et
+// userController.js başına ekle
+const { userSchema } = require('../validation/userValidation');
+
 
 // Kullanıcı ekleme
 exports.createUser = async (req, res) => {
