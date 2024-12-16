@@ -27,6 +27,14 @@ const login = async (req, res) => {
             { expiresIn: '1h' }  // Token geçerlilik süresi
         );
 
+        /*
+        // JWT oluştur, tokenda rol var
+        const token = jwt.sign(
+            { id: user._id, email: user.email, role: user.role },
+            process.env.JWT_SECRET,  // .env dosyasından JWT secret anahtarını alıyoruz
+            { expiresIn: '1h' }  // Token geçerlilik süresi
+        );
+        */
         res.status(200).json({
             message: 'Giriş başarılı',
             token,

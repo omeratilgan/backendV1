@@ -20,7 +20,14 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         minLength: 6
-    }
+    },
+    /*role: {
+        type: String,
+        enum: ['user', 'admin'],  // Sadece 'user' ve 'admin' rolleri kabul edilir
+        default: 'user',         // Varsayılan değer 'user'
+    },
+    */
+    
 });
 
 // Şifreyi kaydetmeden önce hash'le
