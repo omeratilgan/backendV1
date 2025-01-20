@@ -3,22 +3,28 @@ const authRoutes = require('./src/api/routes/auth');
 const userRoutes = require('./src/api/routes/users');
 const connectDB = require('./database');
 const corsMiddleware = require('./src/api/middleware/cors');
-require('dotenv').config();  // .env dosyasını yükler
+const errorHandler = require('./src/api/middleware/errorHandler');
+require('dotenv').config();
+
 const app = express();
 
-
 // Middleware'ler
-app.use(corsMiddleware()); // CORS middleware'i ekle
-app.use(express.json()); // JSON verilerini parse etmek için
-
-// Veritabanı bağlantısını başlat
-connectDB();
+app.use(corsMiddleware());
+app.use(express.json());
 
 // Rotalar
-app.use('/auth', authRoutes);  // Auth rotalarını kullan
-app.use('/users', userRoutes); // Kullanıcı işlemleri rotalarını kullan
+app.use('/auth', authRoutes);
+app.use('/users', userRoutes);
 
-const PORT = 3000;
+// Hata yönetimi middleware'i - tüm rotalardan sonra eklenmelidir
+app.use(errorHandler);
+
+// 404 handler
+app.use((req, res) => {
+    res.status(404).json({ message: 'Sayfa bulunamadı' });
+});
+
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
     console.log(`Sunucu çalışıyor: http://localhost:${PORT}`);

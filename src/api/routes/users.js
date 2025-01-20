@@ -1,14 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const jwtAuth = require('../../api/middleware/jwtAuth'); // JWT doğrulama middleware'i
-const userController = require('../controllers/userController'); // Controller'ı dahil et
-const checkRole = require('../middleware/checkRole');
+const jwtAuth = require('../middleware/jwtAuth');
+const userController = require('../controllers/userController');
+const validateRequest = require('../middleware/validateRequest');
+const { userSchema } = require('../schemas/userSchema');
 
-
-// Kullanıcı işlemleri rotaları
-router.post('/', userController.createUser); // Kullanıcı ekle
-router.get('/', jwtAuth, userController.getUsers); // Kullanıcı listele
-router.put('/:id', jwtAuth, userController.updateUser); // Kullanıcı güncelle
-router.delete('/:id', jwtAuth, userController.deleteUser); // Kullanıcı sil
+router.post('/', validateRequest(userSchema), userController.createUser);
+router.get('/', jwtAuth, userController.getUsers);
+router.put('/:id', jwtAuth, validateRequest(userSchema), userController.updateUser);
+router.delete('/:id', jwtAuth, userController.deleteUser);
 
 module.exports = router;
