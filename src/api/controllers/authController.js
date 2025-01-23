@@ -8,8 +8,11 @@ const login = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        // Kullanıcıyı email ile bul
+        console.log('Login attempt with email:', email); // Debug log
+        
         const user = await User.findOne({ email });
+        console.log('Found user:', user); // Debug log
+        
         if (!user) {
             return res.status(404).json({ message: 'Kullanıcı bulunamadı' });
         }
@@ -23,14 +26,15 @@ const login = async (req, res) => {
         // JWT oluştur
         const token = jwt.sign(
             { id: user._id, email: user.email },
-            process.env.JWT_SECRET,  // .env dosyasından JWT secret anahtarını alıyoruz
-            { expiresIn: '1h' }  // Token geçerlilik süresi
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
         );
         res.status(200).json({
             message: 'Giriş başarılı',
             token,
         });
     } catch (err) {
+        console.error('Login error:', err); // Hata loglaması ekleyelim
         res.status(500).json({ message: 'Giriş yapılamadı', error: err.message });
     }
 };
