@@ -1,7 +1,7 @@
 // src/api/controllers/authController.js
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../../../models/User');
+const User = require('../../models/User');
 require('dotenv').config();  // .env dosyasını dahil ediyoruz
 
 const login = async (req, res) => {
@@ -9,10 +9,10 @@ const login = async (req, res) => {
 
     try {
         console.log('Login attempt with email:', email); // Debug log
-        
+
         const user = await User.findOne({ email });
         console.log('Found user:', user); // Debug log
-        
+
         if (!user) {
             return res.status(404).json({ message: 'Kullanıcı bulunamadı' });
         }
